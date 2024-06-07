@@ -1,0 +1,1 @@
+export * from './joi-env-vars.interface';
