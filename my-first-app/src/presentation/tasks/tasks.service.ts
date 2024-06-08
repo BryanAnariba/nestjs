@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { PaginationDto } from 'src/domain';
 
 @Injectable()
 export class TasksService {
   create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+    return createTaskDto;
   }
 
-  findAll() {
+  findAll(paginationDto: PaginationDto) {
     return `This action returns all tasks`;
   }
 
