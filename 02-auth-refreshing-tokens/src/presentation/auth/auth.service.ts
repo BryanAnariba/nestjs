@@ -28,6 +28,7 @@ export class AuthService {
     if (!isMatchPasswords) throw new HttpException(`Not valid credentials - Password`, HttpStatus.BAD_REQUEST);
     
     delete existsUser.password;
+    delete existsUser.token;
     
     const {token, refreshToken} = await this.getToken(existsUser.id, existsUser.email);
     
@@ -51,8 +52,8 @@ export class AuthService {
           password: Bcrypt.encryptThing(signUpDto.password),
         },
       });
-      console.log({user})
-      const {password: _, ...restOfUser} = user;
+      // console.log({user})
+      const {password: _, token: __, ...restOfUser} = user;
       const {token, refreshToken} = await this.getToken(user.id, user.email);
       await this.usersService.updateToken(user.id, refreshToken);
       return {
@@ -73,7 +74,8 @@ export class AuthService {
 
     const existsUser = await this.usersService.findOne(userId);
     if (!existsUser) throw new HttpException(`Unauthorized, user does not exists`, HttpStatus.UNAUTHORIZED);
-
+    if (!existsUser.token) throw new HttpException(`Unauthorized`, HttpStatus.UNAUTHORIZED);
+    
     const isMatchTokens = Bcrypt.compareThings(refreshedToken, existsUser.token);
     if (!isMatchTokens) throw new HttpException(`Unauthorized, tokens do not matches with each other`, HttpStatus.UNAUTHORIZED);
     

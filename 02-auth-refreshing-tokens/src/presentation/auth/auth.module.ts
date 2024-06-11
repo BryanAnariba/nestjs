@@ -5,7 +5,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { UsersModule } from '../users/users.module';
 import { JWTRefreshStrategy, JWTStrategy } from './strategy';
 import { JwtModule } from '@nestjs/jwt';
-import { config } from 'process';
 
 @Module({
   imports: [
