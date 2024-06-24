@@ -4,10 +4,12 @@ import {
   Column,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ProductImage } from './product-image.entity';
+import { User } from 'src/presentation/auth/entities/user.entity';
 
 @Entity({name: 'products'})
 export class Product {
@@ -43,6 +45,9 @@ export class Product {
 
   @OneToMany(() => ProductImage, (productImage) => productImage.product, {cascade: true, eager: true}) // eager carga la relacion con las imagenes solo funciona con
   images?: ProductImage[]
+
+  @ManyToOne(() => User, (user) => user.products, {eager: true})
+  user: User;
 
   @BeforeInsert()
   checkSlugInsert() {

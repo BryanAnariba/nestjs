@@ -10,3 +10,6 @@
 3. Run Docker Compose: ```docker compose up -d```
 4. Start application: ```npm run start:dev```
 5. Run SEED for create mock data in database: Get - ```localhost:????/api/seed/insert-products```
+
+
+- ```npm install --save @nestjs/jwt passport-jwt & npm install --save @nestjs/passport passport & npm install --save-dev @types/passport-jwt```
