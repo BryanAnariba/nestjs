@@ -11,7 +11,9 @@ import { UserRoleGuard } from './guards/user-role.guard';
 import { RoleProtected } from './decorators/role-protected.decorator';
 import { ValidRoles } from './interfaces/valid-roles.interfaces';
 import { Auth } from './decorators/auth.decorator';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -22,6 +24,9 @@ export class AuthController {
   }
 
   @Post('sign-in')
+  @ApiResponse({status: 200, description: 'Success Login'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 401, description: 'Token related'})
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.userSignIn(signInDto);
   }

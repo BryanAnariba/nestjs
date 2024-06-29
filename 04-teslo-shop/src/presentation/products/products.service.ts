@@ -36,6 +36,7 @@ export class ProductsService {
 
   async findAll(paginationDto: PaginationDto) {
     try {
+      const {limit=10, offset=0} = paginationDto;
       const [products, totalProducts] = await Promise.all([
         this.productRepository.find({
           where: {
@@ -44,8 +45,8 @@ export class ProductsService {
           relations: {
             images: true
           },
-          skip: paginationDto.offset * paginationDto.limit, 
-          take: paginationDto.limit
+          skip: offset * limit, 
+          take: limit
         }),
         this.productRepository.countBy({deletedAt: null})
       ]);

@@ -7,13 +7,19 @@ import { Auth } from '../auth/decorators/auth.decorator';
 import { ValidRoles } from '../auth/interfaces/valid-roles.interfaces';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { User } from '../auth/entities/user.entity';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Product } from './entities';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
   @Auth(ValidRoles.ADMIN)
+  @ApiResponse({status: 201, description: 'Product Was Created', type: Product})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 401, description: 'Token related'})
   create(
     @Body() createProductDto: CreateProductDto,
     @GetUser() user: User,
