@@ -16,3 +16,5 @@
 
 4. Run project
 - ```npm run start:dev```
+
+5. Run product seed for create default products: [Create Products](http://localhost:3000/api/seeds/products)
