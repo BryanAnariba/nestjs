@@ -5,6 +5,9 @@ import { ProductsModule } from './products/products.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
 import { UploadsModule } from './uploads/uploads.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { MessagesWsModule } from './messages-ws/messages-ws.module';
 
 @Module({
   imports: [
@@ -30,6 +33,9 @@ import { UploadsModule } from './uploads/uploads.module';
     CommonModule,
     SeedModule,
     UploadsModule,
+    UsersModule,
+    AuthModule,
+    MessagesWsModule,
   ],
   controllers: [],
   providers: [],

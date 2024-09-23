@@ -4,6 +4,7 @@ import { ProductsController } from './products.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { ProductImage } from './entities/product-image.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ProductImage } from './entities/product-image.entity';
       Product, 
       ProductImage,
     ]),
+    AuthModule,
   ],
   controllers: [ProductsController],
   providers: [ProductsService],

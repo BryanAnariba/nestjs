@@ -5,12 +5,16 @@ import { fileFilter, fileName } from './helpers';
 import { diskStorage } from 'multer';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Uploads')
 @Controller('uploads')
 export class UploadsController {
   constructor(private readonly uploadsService: UploadsService, private readonly configService: ConfigService) { }
 
   @Post("/product")
+  @ApiResponse({status: 200, description: 'Image Uploaded Successfully'})
+  @ApiResponse({status: 500, description: 'Sometime went wrong uplading the image'})
   @UseInterceptors(FileInterceptor('file', {
     fileFilter: fileFilter,
     /*limits: {fieldSize: 1000},*/
@@ -39,6 +43,8 @@ export class UploadsController {
   }
 
   @Get("/product/:fileName")
+  @ApiResponse({status: 200, description: 'Image getting Successfully'})
+  @ApiResponse({status: 500, description: 'Sometime went wrong getting the image'})
   findProductFile(
     @Param('fileName') imageName: string,
     @Res() res: Response

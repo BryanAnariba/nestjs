@@ -1,3 +1,5 @@
+import { encrypt } from "src/config";
+
 interface SeedProduct {
     description: string;
     images: string[];
@@ -11,14 +13,42 @@ interface SeedProduct {
     gender: 'men' | 'women' | 'kid' | 'unisex'
 }
 
+interface SeedUser {
+    email: string;
+    full_name: string;
+    password: string;
+    role: string[];
+}
+
 type ValidSizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
 type ValidTypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
 
 interface SeedData {
+    users: SeedUser[],
     products: SeedProduct[];
 }
 
 export const initialData: SeedData = {
+    users: [
+        {
+            email: "test1@gmail.com",
+            full_name: "test one",
+            password: encrypt("Abc123123"),
+            role: ["ADMIN"]
+        },
+        {
+            email: "test2@gmail.com",
+            full_name: "test two",
+            password: encrypt("Abc123123"),
+            role: ["ADMIN"]
+        },
+        {
+            email: "test3@gmail.com",
+            full_name: "test three",
+            password: encrypt("Abc123123"),
+            role: ["SUPER_USER"]
+        }
+    ],
     products: [
         {
             description: "Introducing the Tesla Chill Collection. The Men’s Chill Crew Neck Sweatshirt has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The sweatshirt features a subtle thermoplastic polyurethane T logo on the chest and a Tesla wordmark below the back collar. Made from 60% cotton and 40% recycled polyester.",
