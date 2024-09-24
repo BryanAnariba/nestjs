@@ -31,6 +31,7 @@ import { JwtStrategy } from './strategies';
     JwtStrategy,
     PassportModule,
     JwtModule,
+    UsersModule,
   ],
 })
 export class AuthModule {}

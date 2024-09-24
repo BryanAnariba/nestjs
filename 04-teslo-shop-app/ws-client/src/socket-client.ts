@@ -1,19 +1,28 @@
 import {Manager, Socket} from 'socket.io-client';
 
-export const connecToServer = () => {
-  const manager = new Manager('http://localhost:3000/socket.io/socket.io.js');
+// importantisimo declararlo global
+let socket: Socket;
+
+export const connecToServer = (token: string) => {
+  const manager = new Manager('http://localhost:3000/socket.io/socket.io.js', {
+    extraHeaders: {
+      authentication: token,
+    },
+  });
 
   // Nos conectamos al namespace del backend
-  const socket = manager.socket('/');
+  socket?.removeAllListeners(); // si existe un socket ya cargado eliminalo para crear uno nuevo
+  socket = manager.socket('/');
   // console.log('Socket: ', socket)
-  addListeners(socket);
+  addListeners();
 }
 
-const addListeners = (socket: Socket) => {
+const addListeners = () => {
 
-  const messageForm = document.querySelector<HTMLFormElement>("#message-form")!;
-  const messageInput = document.querySelector<HTMLInputElement>("#message-input")!;
   const serverStatusLabel = document.querySelector('#server-status')!;
+  const messageInput = document.querySelector<HTMLInputElement>("#message-input")!;
+  const messageForm = document.querySelector<HTMLFormElement>("#message-form")!;
+  const messages = document.querySelector("#messages")!;
 
   // on para escuchar el estado del server, emit es para hablar con ser server
   socket.on('connect', () => {
@@ -49,5 +58,16 @@ const addListeners = (socket: Socket) => {
     });
 
     messageInput.value = '';
+  });
+  
+  socket.on("message-from-server", (payload: {full_name: string, message: string}) => {
+    console.log(payload);
+    let newMessage = `
+      <strong>${payload.full_name}</strong>
+      <span>${payload.message}</span>
+    `;
+    const li = document.createElement('li');
+    li.innerHTML = newMessage;
+    messages.append(li);
   });
 }
