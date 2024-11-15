@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Like, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import {validate as isUUID} from 'uuid';
 
 import { Product } from './entities/product.entity';
@@ -25,11 +25,11 @@ export class ProductsService {
   async create(createProductDto: CreateProductDto, user: User) {
     try {
       const {images = [], ...productDetails} = createProductDto;
-      const product = await this.productRepository.create({
+      const product = this.productRepository.create({
         ...productDetails,
         user: user,
         images: images.map(
-          image => this.productImageRepository.create({url: image})
+          (image) => this.productImageRepository.create({url: image})
         ),
       });
       await this.productRepository.save(product);

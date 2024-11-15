@@ -17,8 +17,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors();
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
   
-  logger.log(`Nest JS Server started on port: ${3000}`);
+  logger.log(`Nest JS Server started on port: ${process.env.PORT}`);
 }
 bootstrap();
