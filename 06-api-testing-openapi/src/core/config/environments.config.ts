@@ -6,6 +6,8 @@ interface EnvironmentVars {
   MONGO_URL_CONNECTION: string;
   DEFAULT_LIMIT: number,
   DEFAULT_SKIP: number,
+  SECRET_KEY: string;
+  JWT_EXPIRE: string;
 }
 
 const environmentVarsSchema = joi
@@ -14,6 +16,8 @@ const environmentVarsSchema = joi
     MONGO_URL_CONNECTION: joi.string().required(),
     DEFAULT_LIMIT: joi.number().required(),
     DEFAULT_SKIP: joi.number().required(),
+    SECRET_KEY: joi.string().required(),
+    JWT_EXPIRE: joi.string().required(),
   })
   .unknown(true);
 
@@ -33,4 +37,6 @@ export const environmentVariables = {
   mongoUrlConnection: environmentVars.MONGO_URL_CONNECTION,
   defaultLimit: environmentVars.DEFAULT_LIMIT,
   defaultSkip: environmentVars.DEFAULT_SKIP,
+  secretKey: environmentVars.SECRET_KEY,
+  jwtExpire: environmentVars.JWT_EXPIRE,
 };
